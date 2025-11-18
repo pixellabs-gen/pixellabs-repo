@@ -1,0 +1,56 @@
+[package]
+name = "pixellabs-inference-engine"
+version = "0.1.0"
+edition = "2021"
+authors = ["PixelLabs <engineering@pixellabs.ai>"]
+description = "High-performance Rust inference engine powering the Synthetix Vision Architecture"
+license = "MIT"
+repository = "https://github.com/pixellabs-gen/pixellabs-repo"
+keywords = ["ai", "image-generation", "nft", "inference", "diffusion"]
+categories = ["science", "multimedia::images"]
+
+[lib]
+name = "pixellabs_inference"
+crate-type = ["cdylib", "rlib"]
+
+[[bin]]
+name = "inference-server"
+path = "src/bin/server.rs"
+
+[dependencies]
+tokio = { version = "1.35", features = ["full"] }
+axum = { version = "0.7", features = ["json", "macros"] }
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+anyhow = "1.0"
+thiserror = "1.0"
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter", "json"] }
+uuid = { version = "1.6", features = ["v4", "serde"] }
+tokio-util = { version = "0.7", features = ["codec"] }
+bytes = "1.5"
+rand = "0.8"
+rayon = "1.8"
+ndarray = "0.15"
+image = "0.25"
+base64 = "0.21"
+sha2 = "0.10"
+hmac = "0.12"
+
+[dev-dependencies]
+tokio-test = "0.4"
+criterion = { version = "0.5", features = ["html_reports"] }
+
+[[bench]]
+name = "inference_bench"
+harness = false
+
+[profile.release]
+opt-level = 3
+lto = true
+codegen-units = 1
+panic = "abort"
+
+[profile.dev]
+opt-level = 0
+debug = true
