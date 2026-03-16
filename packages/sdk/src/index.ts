@@ -1,5 +1,6 @@
 import {
   BatchGenerationRequest,
+  estimateCredits,
   GenerationClient,
   GenerationClientConfig,
   GenerationRequest,
@@ -30,6 +31,10 @@ export class PixelLabsSdk {
 
   generateBatch(request: BatchGenerationRequest): Promise<GenerationResult[]> {
     return this.generation.generateBatch(request);
+  }
+
+  estimateCredits(quality: string, count = 1): number {
+    return estimateCredits(quality, count);
   }
 
   getJobStatus(jobId: string): Promise<JobStatus> {
