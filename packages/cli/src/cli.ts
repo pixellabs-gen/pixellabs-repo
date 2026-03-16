@@ -5,6 +5,7 @@ import ora from 'ora';
 import chalk from 'chalk';
 import {
   AspectRatio,
+  buildEnhancedPrompt,
   GenerationClient,
   GenerationModel,
   QualityPreset,
@@ -113,6 +114,31 @@ program
       spinner.fail('Failed to fetch usage');
       handleError(error);
     }
+  });
+
+program
+  .command('prompt')
+  .description('Preview prompt enhancement output')
+  .option('--prompt <text>', 'Prompt for enhancement')
+  .option('--quality <quality>', 'Quality: draft|standard|high|ultra', 'standard')
+  .option('--style-tags <list>', 'Comma-separated style tags')
+  .option('--negative <text>', 'Negative prompt')
+  .option('--max-length <n>', 'Maximum prompt length', parseInt)
+  .option('--json', 'Output raw JSON')
+  .action(async (options) => {
+    const prompt = options.prompt ?? (await promptForText('Prompt'));
+    const styleTags = options.styleTags
+      ? options.styleTags.split(',').map((item: string) => item.trim()).filter(Boolean)
+      : [];
+    const result = buildEnhancedPrompt({
+      prompt,
+      quality: parseQuality(options.quality),
+      styleTags,
+      negativePrompt: options.negative,
+      maxLength: options.maxLength,
+    });
+
+    printResult(result, options.json);
   });
 
 program
