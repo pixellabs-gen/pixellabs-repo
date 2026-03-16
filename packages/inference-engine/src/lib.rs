@@ -21,6 +21,7 @@ pub mod postprocess;
 pub mod error;
 
 pub use error::InferenceError;
+pub use pipeline::SynthetixPipeline;
 
 /// Generation quality configuration for the denoising pipeline
 #[derive(Debug, Clone, Serialize, Deserialize)]
