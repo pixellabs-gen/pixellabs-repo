@@ -12,6 +12,9 @@ export * from './types/index.js';
 // Export utilities
 export * from './utils/validation.js';
 
+// Export prompt engine
+export * from './engine/index.js';
+
 // Export the API client
 export { GenerationClient } from './client.js';
 export type { GenerationClientConfig } from './client.js';
