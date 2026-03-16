@@ -1,4 +1,7 @@
-use crate::{InferenceConfig, InferenceError, InferenceMetrics, InferenceRequest, InferenceResult};
+use crate::{
+    encoder::encode_prompt, InferenceConfig, InferenceError, InferenceMetrics, InferenceRequest,
+    InferenceResult,
+};
 use rand::{rngs::StdRng, SeedableRng};
 use std::time::Instant;
 use tracing::{debug, info, instrument, warn};
@@ -46,16 +49,15 @@ impl SynthetixPipeline {
 
         let mut rng = StdRng::seed_from_u64(seed);
 
-        // Validate prompt length (CLIP tokenizer max is 77 tokens)
-        let token_count = estimate_token_count(&request.prompt);
-        if token_count > 77 {
-            return Err(InferenceError::PromptTooLong {
-                tokens: token_count,
-                max: 77,
-            });
-        }
+        // Encode prompt embeddings for conditioning (validates token length)
+        let embeddings = encode_prompt(&request.prompt, request.negative_prompt.as_deref())?;
 
-        debug!(seed, token_count, "Starting denoising loop");
+        debug!(
+            seed,
+            token_count = embeddings.token_count,
+            negative_tokens = embeddings.negative_token_count,
+            "Starting denoising loop"
+        );
 
         let mut step_latencies = Vec::with_capacity(request.config.steps as usize);
 
@@ -115,11 +117,6 @@ impl SynthetixPipeline {
         //             + sqrt(1 - α_{t-1}) * predicted_direction
         Ok(())
     }
-}
-
-/// Rough token count estimator (whitespace tokenization approximation)
-fn estimate_token_count(text: &str) -> usize {
-    text.split_whitespace().count()
 }
 
 /// Computes BLAKE3 content hash of image bytes
