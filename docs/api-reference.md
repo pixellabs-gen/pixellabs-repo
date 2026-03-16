@@ -118,3 +118,35 @@ Content-Type: application/json
   "resetAt": "2026-03-16T11:00:00Z"
 }
 ```
+
+## Error Responses
+
+All errors return a consistent JSON envelope:
+
+```json
+{
+  "error": {
+    "code": "RATE_LIMIT_ERROR",
+    "message": "Rate limit exceeded",
+    "details": {
+      "retryAfter": 60
+    }
+  }
+}
+```
+
+### Common Error Codes
+
+- `VALIDATION_ERROR`
+- `RATE_LIMIT_ERROR`
+- `INSUFFICIENT_CREDITS`
+- `API_ERROR`
+- `NETWORK_ERROR`
+
+## Rate Limit Headers
+
+Responses may include:
+
+- `Retry-After` (seconds)
+- `X-RateLimit-Limit`
+- `X-RateLimit-Remaining`
