@@ -17,7 +17,7 @@ export * from './engine/index.js';
 
 // Export the API client
 export { GenerationClient } from './client.js';
-export type { GenerationClientConfig } from './client.js';
+export type { GenerationClientConfig, JobStatus, UsageInfo } from './client.js';
 
 // Version info
 export const VERSION = '0.1.0';

@@ -4,6 +4,8 @@ import {
   GenerationClientConfig,
   GenerationRequest,
   GenerationResult,
+  JobStatus,
+  UsageInfo,
 } from '@pixellabs/core';
 import { MintingClient, MintingConfig } from './minting.js';
 
@@ -28,6 +30,14 @@ export class PixelLabsSdk {
 
   generateBatch(request: BatchGenerationRequest): Promise<GenerationResult[]> {
     return this.generation.generateBatch(request);
+  }
+
+  getJobStatus(jobId: string): Promise<JobStatus> {
+    return this.generation.getJobStatus(jobId);
+  }
+
+  getUsage(): Promise<UsageInfo> {
+    return this.generation.getUsage();
   }
 }
 
