@@ -12,6 +12,10 @@ export * from './types/index.js';
 // Export utilities
 export * from './utils/validation.js';
 
+// Export the API client
+export { GenerationClient } from './client.js';
+export type { GenerationClientConfig } from './client.js';
+
 // Version info
 export const VERSION = '0.1.0';
 export const API_VERSION = 'v1';
