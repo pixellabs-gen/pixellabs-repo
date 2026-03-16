@@ -19,7 +19,7 @@ pub fn encode_prompt(
     prompt: &str,
     negative_prompt: Option<&str>,
 ) -> Result<PromptEmbedding, InferenceError> {
-    let token_count = tokenize(prompt).len();
+    let token_count = count_tokens(prompt);
     if token_count > MAX_TOKENS {
         return Err(InferenceError::PromptTooLong {
             tokens: token_count,
@@ -30,7 +30,7 @@ pub fn encode_prompt(
     let embedding = embedding_from_text(prompt);
 
     let (negative_embedding, negative_token_count) = if let Some(text) = negative_prompt {
-        let neg_count = tokenize(text).len();
+        let neg_count = count_tokens(text);
         if neg_count > MAX_TOKENS {
             return Err(InferenceError::PromptTooLong {
                 tokens: neg_count,
@@ -48,6 +48,11 @@ pub fn encode_prompt(
         token_count,
         negative_token_count,
     })
+}
+
+/// Counts whitespace-delimited tokens in a prompt.
+pub fn count_tokens(text: &str) -> usize {
+    tokenize(text).len()
 }
 
 fn tokenize(text: &str) -> Vec<&str> {
@@ -69,4 +74,28 @@ fn seed_from_text(text: &str) -> u64 {
     let mut bytes = [0u8; 8];
     bytes.copy_from_slice(&digest[..8]);
     u64::from_le_bytes(bytes)
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn count_tokens_splits_on_whitespace() {
+        let text = "neon temple  with  haze";
+        assert_eq!(count_tokens(text), 4);
+    }
+
+    #[test]
+    fn encode_prompt_rejects_long_prompt() {
+        let prompt = vec!["token"; MAX_TOKENS + 1].join(" ");
+        let error = encode_prompt(&prompt, None).expect_err("should reject long prompt");
+        match error {
+            InferenceError::PromptTooLong { tokens, max } => {
+                assert_eq!(tokens, MAX_TOKENS + 1);
+                assert_eq!(max, MAX_TOKENS);
+            }
+            _ => panic!("unexpected error type"),
+        }
+    }
 }
