@@ -63,6 +63,13 @@ const job = await sdk.getJobStatus('job_123');
 console.log(job.status, job.progress);
 ```
 
+## Credit Estimation
+
+```
+const estimated = sdk.estimateCredits('ultra', 5);
+console.log(`Estimated credits: ${estimated}`);
+```
+
 ## Minting Integration
 
 ```
