@@ -31,7 +31,7 @@ tokio-util = { version = "0.7", features = ["codec"] }
 bytes = "1.5"
 rand = "0.8"
 rayon = "1.8"
-ndarray = "0.15"
+ndarray = "0.17"
 image = "0.25"
 base64 = "0.21"
 sha2 = "0.10"
