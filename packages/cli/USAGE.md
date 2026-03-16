@@ -44,6 +44,15 @@ node packages/cli/dist/cli.js usage
 node packages/cli/dist/cli.js status job_123
 ```
 
+## Prompt Preview
+
+```
+node packages/cli/dist/cli.js prompt \
+  --prompt "bioluminescent temple, mist" \
+  --quality ultra \
+  --style-tags "cinematic lighting, sharp focus"
+```
+
 ## JSON Output
 
 Use `--json` with any command to return the raw JSON response for scripting:
