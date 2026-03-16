@@ -26,6 +26,10 @@ pub enum InferenceError {
     #[error("Request timed out after {timeout_ms}ms in scheduler queue")]
     SchedulerTimeout { timeout_ms: u64 },
 
+    /// Scheduler queue is full
+    #[error("Scheduler queue is full (max: {max})")]
+    QueueFull { max: usize },
+
     /// Invalid configuration parameter
     #[error("Invalid configuration: {field} — {reason}")]
     InvalidConfig { field: String, reason: String },
@@ -48,6 +52,7 @@ impl InferenceError {
             Self::PipelineInstability { .. } => "PIPELINE_INSTABILITY",
             Self::OutOfMemory { .. } => "OUT_OF_MEMORY",
             Self::SchedulerTimeout { .. } => "SCHEDULER_TIMEOUT",
+            Self::QueueFull { .. } => "SCHEDULER_QUEUE_FULL",
             Self::InvalidConfig { .. } => "INVALID_CONFIG",
             Self::Serialization(_) => "SERIALIZATION_ERROR",
             Self::Internal(_) => "INTERNAL_ERROR",
@@ -58,7 +63,10 @@ impl InferenceError {
     pub fn is_retriable(&self) -> bool {
         matches!(
             self,
-            Self::OutOfMemory { .. } | Self::SchedulerTimeout { .. } | Self::Internal(_)
+            Self::OutOfMemory { .. }
+                | Self::SchedulerTimeout { .. }
+                | Self::QueueFull { .. }
+                | Self::Internal(_)
         )
     }
 }
