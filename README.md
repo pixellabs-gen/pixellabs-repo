@@ -1,10 +1,21 @@
 ![PixelLabs Banner](public/image.jpg)
 
-**Website:** [pixellabsai.app](https://pixellabsai.app)  
-**Docs:** [docs.pixellabsai.app](https://docs.pixellabsai.app)  
-**X:** [x.com/PixelLabsCore](https://x.com/PixelLabsCore)
+[![Website](https://img.shields.io/badge/Website-pixellabsai.app-000000?style=for-the-badge&logo=vercel&logoColor=white)](https://pixellabsai.app)
+[![Docs](https://img.shields.io/badge/Docs-docs.pixellabsai.app-000000?style=for-the-badge&logo=read-the-docs&logoColor=white)](https://docs.pixellabsai.app)
+[![X](https://img.shields.io/badge/X-%40PixelLabsCore-000000?style=for-the-badge&logo=x&logoColor=white)](https://x.com/PixelLabsCore)
 
-**Tags:** `Solana` `Web3` `AI` `NFT` `Omnichain` `Rust` `TypeScript` `SDK` `CLI` `Generative Art`
+<br/>
+
+![Solana](https://img.shields.io/badge/Solana-14F195?style=flat-square&logo=solana&logoColor=black)
+![Rust](https://img.shields.io/badge/Rust-000000?style=flat-square&logo=rust&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white)
+![Web3](https://img.shields.io/badge/Web3-F16822?style=flat-square)
+![AI](https://img.shields.io/badge/AI-4B0082?style=flat-square)
+![NFT](https://img.shields.io/badge/NFT-FF007A?style=flat-square)
+![Omnichain](https://img.shields.io/badge/Omnichain-8C8C8C?style=flat-square)
+![SDK](https://img.shields.io/badge/SDK-FFB020?style=flat-square)
+![CLI](https://img.shields.io/badge/CLI-FF4D4D?style=flat-square)
+![Generative Art](https://img.shields.io/badge/Generative_Art-9932CC?style=flat-square)
 
 # PixelLabs
 
